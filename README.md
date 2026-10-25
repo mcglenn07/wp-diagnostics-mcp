@@ -20,7 +20,7 @@ Built against a real [Local by Flywheel](https://localwp.com) WordPress site run
 
 Local by Flywheel doesn't put `php` or `wp` on `PATH` — each site is pinned to its own bundled PHP version, and WP-CLI ships as a single `.phar` inside the Local.app bundle. `wp-config.php` also sets `DB_HOST` to plain `localhost`, but Local runs each site's MySQL on its own per-site socket rather than the system default, so a bare CLI call fails with a database connection error even though WP-CLI itself is reachable.
 
-`server.py` centralizes all of that into one `run_wp_cli()` helper that points the PHP binary, `mysqli`/`pdo_mysql`, and the `mysql` client (for `wp db query`, which shells out to it directly) at the correct per-site socket. Every tool above is a thin wrapper around a specific WP-CLI command.
+`server.py` centralizes all of that into one `run_wp_cli()` helper that points the PHP binary, `mysqli`/`pdo_mysql`, and the `mysql` client (for `wp db query`, which shells out to it directly) at the correct per-site socket. Five of the seven tools are thin wrappers around a specific WP-CLI command. `wp_error_log` reads `debug.log` directly, and `gf_addon_log` asks WP-CLI for the add-on's log path, then reads that file.
 
 ## Setup
 
